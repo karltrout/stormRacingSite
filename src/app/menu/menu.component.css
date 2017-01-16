@@ -1,0 +1,10 @@
+.menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  width: auto;
+  background-color: white;
+  opacity: .65;
+}
