@@ -3,8 +3,23 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 5px;
+  height: 35px;
   width: auto;
-  background-color: white;
-  opacity: .65;
+
+/*  background-color: white;
+ opacity: .65; */
+}
+
+span {
+  text-transform: uppercase;
+  font-family: "Roboto","Helvetica Neue Light","Helvetica Neue",Helvetica,Arial,"Lucida Grande",sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  text-shadow: 1px 1px #FFFFFF;
+  letter-spacing: 0.16px;
+  text-align: center;
+  padding: 10px;
+  height: auto;
+  display: inline-block;
+  vertical-align: middle;
 }

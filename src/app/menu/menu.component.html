@@ -1,3 +1,7 @@
-<div class="menu" menuMouseDirective>
-This is a menu.
+<div class="menu"
+        (mouseenter)="onEvent($event)"
+        (mouseleave)="onEvent($event)"
+        (mousemove)="coordinates($event)"
+         [@shrinkUp]="mouseEntered">
+<span>Coming Soon</span>
 </div>
