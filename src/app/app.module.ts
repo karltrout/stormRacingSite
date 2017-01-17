@@ -6,12 +6,14 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuDirective } from './menu/menu.directive';
+import { SignupComponent } from './signup/signup.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MenuComponent,
-    MenuDirective ],
+    MenuDirective,
+    SignupComponent ],
   imports: [
     BrowserModule,
     FormsModule,
