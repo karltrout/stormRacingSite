@@ -6,10 +6,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./signup.component.css']
 })
 export class SignupComponent implements OnInit {
+  submitted = false;
+  emailAddress:string;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {}
+
+  onSubmit() {
+    this.submitted = true;
   }
 
 }

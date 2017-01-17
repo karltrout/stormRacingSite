@@ -1,6 +1,6 @@
 import { TestNgPage } from './app.po';
 
-describe('test-ng App', function() {
+describe('StormRacingSite App', function() {
   let page: TestNgPage;
 
   beforeEach(() => {
