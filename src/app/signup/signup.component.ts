@@ -9,6 +9,8 @@ import {
   keyframes
 } from '@angular/core';
 
+import { User } from 'app/user';
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -26,20 +28,20 @@ import {
         visibility: 'hidden'
       })),
       transition('reveal => hide',
-      animate(250,
-        keyframes([
-          style({opacity: 1, height:'*', offset: 0}),
-          style({opacity: 0, height:'*', offset: 0.3}),
-          style({opacity: 0, height: 0, offset: 1.0})
-        ]))),
+        animate(250,
+          keyframes([
+            style({ opacity: 1, height: '*', offset: 0 }),
+            style({ opacity: 0, height: '*', offset: 0.3 }),
+            style({ opacity: 0, height: 0, offset: 1.0 })
+          ]))),
       transition('hide => reveal',
-      animate(250,
-        keyframes([
-          style({opacity: 0, height:0, offset: 0}),
-          style({opacity: 0, height:'*', offset: 0.3}),
-          style({opacity: 1, height: '*', offset: 1.0})
-        ])
-      ))
+        animate(250,
+          keyframes([
+            style({ opacity: 0, height: 0, offset: 0 }),
+            style({ opacity: 0, height: '*', offset: 0.3 }),
+            style({ opacity: 1, height: '*', offset: 1.0 })
+          ])
+        ))
     ]),
   ]
 })
@@ -48,14 +50,20 @@ export class SignupComponent implements OnInit {
   submitted = false;
   myShowForm: string = 'hide';
 
-  emailAddress: string;
+  user: User;
 
-  constructor() { }
+  constructor() {
 
-  ngOnInit() { }
+  }
+
+  ngOnInit() {
+    this.user = new User();
+  }
 
   onSubmit() {
+
     this.submitted = true;
+    console.log("Attempting to Submit the user " + this.user.email);
   }
 
   showForm() {

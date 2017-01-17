@@ -1,9 +1,9 @@
 <div class="signup-container">
   <p (click)="showForm()">Get the Weather Report</p>
   <form [@revealSignup]="myShowForm">
-    <input type="text" name="firstName" class="signup-entry signup-entry-plus" id="firstName" placeholder="First Name" />
-    <input type="text" name="lastName" class="signup-entry signup-entry-plus" id="lastName" placeholder="Last Name" />
-    <input type="email" name="email" class="signup-entry" id="email-signup" placeholder="E-Mail Address" required/>
-    <button type="submit" class="signup-btn">Go</button>
+    <input [(ngModel)]="user.firstName" type="text" name="firstName" class="signup-entry signup-entry-plus" id="firstName" placeholder="First Name" />
+    <input [(ngModel)]="user.lastName" type="text" name="lastName" class="signup-entry signup-entry-plus" id="lastName" placeholder="Last Name" />
+    <input [(ngModel)]="user.email" type="email" name="email" class="signup-entry" id="email-signup" placeholder="E-Mail Address" required/>
+    <button (click)="onSubmit()" type="submit" class="signup-btn">Go</button>
   </form>
 </div>
