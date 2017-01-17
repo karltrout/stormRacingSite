@@ -1,7 +1,9 @@
 <div class="signup-container">
-  <form>
-    <p>Get the Weather Report</p>
-    <input type="email" name="email" class="email-entry" id="email-signup" value="E-Mail Address" required/>
+  <p (click)="showForm()">Get the Weather Report</p>
+  <form [@revealSignup]="myShowForm">
+    <input type="text" name="firstName" class="signup-entry signup-entry-plus" id="firstName" placeholder="First Name" />
+    <input type="text" name="lastName" class="signup-entry signup-entry-plus" id="lastName" placeholder="Last Name" />
+    <input type="email" name="email" class="signup-entry" id="email-signup" placeholder="E-Mail Address" required/>
     <button type="submit" class="signup-btn">Go</button>
   </form>
 </div>

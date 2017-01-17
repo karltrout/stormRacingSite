@@ -1,20 +1,68 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+  keyframes
+} from '@angular/core';
 
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.css']
+  styleUrls: ['./signup.component.css'],
+  animations: [
+    trigger('revealSignup', [
+      state('reveal', style({
+        height: '*',
+        opacity: 1,
+        visibility: 'visible'
+      })),
+      state('hide', style({
+        height: 0,
+        opacity: 0,
+        visibility: 'hidden'
+      })),
+      transition('reveal => hide',
+      animate(250,
+        keyframes([
+          style({opacity: 1, height:'*', offset: 0}),
+          style({opacity: 0, height:'*', offset: 0.3}),
+          style({opacity: 0, height: 0, offset: 1.0})
+        ]))),
+      transition('hide => reveal',
+      animate(250,
+        keyframes([
+          style({opacity: 0, height:0, offset: 0}),
+          style({opacity: 0, height:'*', offset: 0.3}),
+          style({opacity: 1, height: '*', offset: 1.0})
+        ])
+      ))
+    ]),
+  ]
 })
 export class SignupComponent implements OnInit {
+
   submitted = false;
-  emailAddress:string;
+  myShowForm: string = 'hide';
+
+  emailAddress: string;
 
   constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSubmit() {
     this.submitted = true;
+  }
+
+  showForm() {
+    if (this.myShowForm === 'hide') this.myShowForm = 'reveal';
+    else this.myShowForm = 'hide';
+
+    console.log("Atempting to " + this.myShowForm + " the Signup Form ");
   }
 
 }
