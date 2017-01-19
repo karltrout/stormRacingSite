@@ -50,10 +50,13 @@ export class SignupComponent implements OnInit {
   submitted = false;
   myShowForm: string = 'hide';
 
-  user: User;
+  user: User = new User();
 
   constructor() {
-
+      this.user = new User();
+      this.user.firstName = "Karl";
+      this.user.lastName= "Trout";
+      this.user.email = "karl.trout@gmail.com";
   }
 
   ngOnInit() {
