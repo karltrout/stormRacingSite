@@ -1,11 +1,14 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import {} from 'jasmine';
 
 import { SignupComponent } from './signup.component';
+import { UserAccountService } from 'app/user-account.service';
 
 describe('SignupComponent', () => {
   let component: SignupComponent;
@@ -15,8 +18,10 @@ describe('SignupComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ SignupComponent ],
       imports: [
-          FormsModule
-        ]
+          FormsModule,
+          HttpModule
+        ],
+        providers: [UserAccountService]
     })
     .compileComponents();
   }));

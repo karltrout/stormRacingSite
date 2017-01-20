@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuDirective } from './menu/menu.directive';
 import { SignupComponent } from './signup/signup.component';
+import { UserAccountService } from './user-account.service';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import { SignupComponent } from './signup/signup.component';
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [UserAccountService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
