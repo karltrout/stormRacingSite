@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, Response } from '@angular/http';
-import { User }           from './user';
+import { User }           from 'app/entities/user';
 // Add the RxJS Observable operators.
 import './rxjs-operators';
 
@@ -16,6 +16,12 @@ export class UserAccountService {
       .toPromise()
       .then(this.mapUserData)
       .catch(this.errorHandling);
+  }
+
+  createUserAccount(newUser: User){
+
+    console.log("Attempting to create a new User -> "+newUser.getEmail());
+
   }
 
   private mapUserData(response: Response) {

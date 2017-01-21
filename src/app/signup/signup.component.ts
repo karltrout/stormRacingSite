@@ -9,8 +9,8 @@ import {
   keyframes
 } from '@angular/core';
 
-import { User } from 'app/user';
-import { UserAccountService } from 'app/user-account.service';
+import { User } from 'app/entities/user';
+import { UserAccountService } from 'app/services/user-account.service';
 
 @Component({
   selector: 'app-signup',
@@ -46,8 +46,8 @@ import { UserAccountService } from 'app/user-account.service';
     ]),
   ]
 })
-export class SignupComponent implements OnInit {
 
+export class SignupComponent implements OnInit {
   submitted = false;
   myShowForm: string = 'hide';
 
@@ -64,33 +64,31 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-
     this.submitted = true;
+
     console.log("Attempting to Submit the user " + this.user.email);
 
     this.userAccountService.getUserByEmail(this.user.email).then(
       function(response) {
-        let u = response;// as User;
+
         console.log("the response is :" + response.email);
-        let test = u instanceof User;
-        console.log ("the Response is an InstanceOf User: "+test);
-        console.log("the u user is : "+u.getId());
+
       }
     ).catch(error => console.log("there was a problem." + error));
-
   }
-
 
   doesUserExist() {
 
     console.log("Attempting to Check if user " + this.user.email + " Exists.");
 
   }
+
   showForm() {
     if (this.myShowForm === 'hide') this.myShowForm = 'reveal';
     else this.myShowForm = 'hide';
 
     console.log("Atempting to " + this.myShowForm + " the Signup Form ");
+
   }
 
 }

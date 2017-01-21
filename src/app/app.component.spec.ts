@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { SignupComponent } from './signup/signup.component';
-import { UserAccountService } from './user-account.service';
+import { UserAccountService } from './services/user-account.service';
 
 import {} from 'jasmine';
 
