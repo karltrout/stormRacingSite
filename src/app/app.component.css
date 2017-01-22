@@ -6,7 +6,7 @@
   top: 0;
   z-index: -1;
   display: block;
-  background-image: url('app/images/SRW_LOGO.png'), url('app/images/fbg.jpg');
+  background-image: url('assets/images/SRW_LOGO.png'), url('assets/images/fbg.jpg');
   background-size: 80% 50%, 100% 100%;
   background-repeat: no-repeat;
   background-position: bottom center, center;
