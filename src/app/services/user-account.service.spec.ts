@@ -17,32 +17,52 @@ describe('UserAccountService', () => {
 
     TestBed.configureTestingModule({
       imports: [HttpModule],
-      providers: [UserAccountService, MockBackend, User]
+      providers: [
+        UserAccountService,
+        BaseRequestOptions,
+         MockBackend,
+         {
+           provide: Http,
+           deps: [MockBackend, BaseRequestOptions],
+           useFactory: (backend, options) => { return new Http(backend, options); }
+         },
+         User
+       ]
     });
 
   });
-
 
   it('should ...', inject([UserAccountService, MockBackend], (service: UserAccountService, backend: MockBackend) => {
     expect(service).toBeTruthy();
   }));
 
   describe('.getUserByEmail()', () => {
-
     //verify that method exists
     it('should ...', inject([UserAccountService], (service: UserAccountService) => {
       expect(service.getUserByEmail).toBeDefined();
     }));
 
-    it('find a user by email.', async(inject([UserAccountService, User], (service: UserAccountService) => {
+    it('find a user by email.', inject([UserAccountService, MockBackend], (service: UserAccountService, backend: MockBackend) => {
+
+      backend.connections.subscribe(conn => {
+        conn.mockRespond(
+          new Response(
+            new ResponseOptions(
+              {body: JSON.stringify(testUser)}
+            )));
+      });
 
       service.getUserByEmail(testUser.getEmail()).then(
         function(response) {
           expect(response.getEmail()).toEqual(testUser.getEmail())
         }
-      ).catch();
+      ).catch (
+        () => {
+         console.log("An Error occured with Response.");
+       }
+      );
 
-    })));
+    }));
 
   });
 
@@ -52,7 +72,6 @@ describe('UserAccountService', () => {
       expect(service.createUserAccount).toBeDefined();
     }));
     //it('should call mock endpoint and return the results', ())
-
   });
 
 });
