@@ -47,6 +47,7 @@ import { UserAccountService } from 'app/services/user-account.service';
   ]
 })
 
+
 export class SignupComponent implements OnInit {
   submitted = false;
   myShowForm: string = 'hide';
