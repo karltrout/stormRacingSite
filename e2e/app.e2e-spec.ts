@@ -1,4 +1,5 @@
 import { TestNgPage } from './app.po';
+import {} from 'jasmine';
 
 describe('StormRacingSite App', function() {
   let page: TestNgPage;
@@ -7,8 +8,9 @@ describe('StormRacingSite App', function() {
     page = new TestNgPage();
   });
 
-  it('should display message saying app works', () => {
+  it('should contain a menu object', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('app works!');
+    expect(page.getMenu()).toBeDefined;
   });
+
 });

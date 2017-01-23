@@ -10,6 +10,7 @@ let testUser: User = new User();
 testUser.setFirstName("John");
 testUser.setLastName("Doe");
 testUser.setEmail("john.doe@gmail.com");
+testUser.id = 1;
 
 describe('UserAccountService', () => {
 
@@ -20,21 +21,22 @@ describe('UserAccountService', () => {
       providers: [
         UserAccountService,
         BaseRequestOptions,
-         MockBackend,
-         {
-           provide: Http,
-           deps: [MockBackend, BaseRequestOptions],
-           useFactory: (backend, options) => { return new Http(backend, options); }
-         },
-         User
-       ]
+        MockBackend,
+        {
+          provide: Http,
+          deps: [MockBackend, BaseRequestOptions],
+          useFactory: (backend, options) => { return new Http(backend, options); }
+        },
+        User
+      ]
     });
 
   });
 
-  it('should ...', inject([UserAccountService, MockBackend], (service: UserAccountService, backend: MockBackend) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', inject([UserAccountService, MockBackend],
+    (service: UserAccountService, backend: MockBackend) => {
+      expect(service).toBeTruthy();
+    }));
 
   describe('.getUserByEmail()', () => {
     //verify that method exists
@@ -42,27 +44,28 @@ describe('UserAccountService', () => {
       expect(service.getUserByEmail).toBeDefined();
     }));
 
-    it('find a user by email.', inject([UserAccountService, MockBackend], (service: UserAccountService, backend: MockBackend) => {
+    it('find a user by email.', inject([UserAccountService, MockBackend],
+      (service: UserAccountService, backend: MockBackend) => {
 
-      backend.connections.subscribe(conn => {
-        conn.mockRespond(
-          new Response(
-            new ResponseOptions(
-              {body: JSON.stringify(testUser)}
-            )));
-      });
+        backend.connections.subscribe(conn => {
+          conn.mockRespond(
+            new Response(
+              new ResponseOptions(
+                { body: JSON.stringify(testUser) }
+              )));
+        });
 
-      service.getUserByEmail(testUser.getEmail()).then(
-        function(response) {
-          expect(response.getEmail()).toEqual(testUser.getEmail())
-        }
-      ).catch (
-        () => {
-         console.log("An Error occured with Response.");
-       }
-      );
+        service.getUserByEmail(testUser.getEmail()).then(
+          function(response) {
+            expect(response.getEmail()).toEqual(testUser.getEmail())
+          }
+        ).catch(
+          () => {
+            console.log("An Error occured with Response in getUserByEmail().");
+          }
+          );
 
-    }));
+      }));
 
   });
 
@@ -72,6 +75,30 @@ describe('UserAccountService', () => {
       expect(service.createUserAccount).toBeDefined();
     }));
     //it('should call mock endpoint and return the results', ())
+    it('call the mock service and return the newly created account',
+      inject([UserAccountService, MockBackend], (service: UserAccountService, backend: MockBackend) => {
+        //set up the mock backend response
+        testUser.setId(2);
+        backend.connections.subscribe(conn => {
+          conn.mockRespond(
+            new Response(
+              new ResponseOptions(
+                { body: JSON.stringify(testUser) }
+              )));
+        });
+        //call the service expecting the complete end user account returned
+        let newUser = User.fromObject(testUser);
+        newUser.setId(null);
+        service.createUserAccount(newUser).then(
+          function(response) {
+            expect(response).toBeDefined();
+            expect(response.getId()).toEqual(2);
+          }
+        ).catch(
+          () => { console.log("An Error occured with Response in createUserAccount()."); }
+          );
+
+      }));
   });
 
 });

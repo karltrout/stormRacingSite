@@ -12,6 +12,9 @@ import {
 import { User } from 'app/entities/user';
 import { UserAccountService } from 'app/services/user-account.service';
 
+const EMAIL_EXIST_MSG: string = "Email Address exists";
+const INVALID_EMAIL_MSG: string = "Email Address invalid";
+
 @Component({
   selector: 'app-signup',
   templateUrl: './signup.component.html',
@@ -47,10 +50,11 @@ import { UserAccountService } from 'app/services/user-account.service';
   ]
 })
 
-
 export class SignupComponent implements OnInit {
   submitted = false;
   myShowForm: string = 'hide';
+  messageExists: boolean = false;
+  message: string = "error message";
 
   user: User;
   existingUser: User[];
@@ -65,30 +69,68 @@ export class SignupComponent implements OnInit {
   }
 
   onSubmit() {
-    this.submitted = true;
-
     console.log("Attempting to Submit the user " + this.user.email);
 
-    this.userAccountService.getUserByEmail(this.user.email).then(
+    if (!this.user.email.match('^.+@.+\..+$')) {
+      this.displayMessage(INVALID_EMAIL_MSG);
+      return;
+    }
+
+    this.userAccountService.createUserAccount(this.user).then(
       function(response) {
-
-        console.log("the response is :" + response.email);
-
+        console.log("the response id returned from CreateUserAccount() is :" + response.getId());
       }
-    ).catch(error => console.log("there was a problem." + error));
+    ).catch(
+      error => {
+        console.log("REJECT Reason: -> " + error.status);
+
+        switch (error.status) {
+          case 302:
+            this.displayMessage(EMAIL_EXIST_MSG);
+            break;
+          case 400:
+            this.displayMessage(INVALID_EMAIL_MSG);
+            break;
+          case 404:
+            break;
+          default:
+        }
+      }
+      );
   }
 
   doesUserExist() {
-
     console.log("Attempting to Check if user " + this.user.email + " Exists.");
 
+    this.messageExists = false;
+
+    this.userAccountService.getUserByEmail(this.user.email).then(
+      function(response) {
+        this.displayMessage(EMAIL_EXIST_MSG);
+      }
+    ).catch(
+      error => {
+        switch (error.status) {
+          case 400:
+            this.displayMessage(INVALID_EMAIL_MSG);
+            break;
+          case 404:
+          console.log("Email does not exist. Proceed.")
+            break;
+          default:
+        };
+      });
   }
 
   showForm() {
     if (this.myShowForm === 'hide') this.myShowForm = 'reveal';
     else this.myShowForm = 'hide';
+  }
 
-    console.log("Atempting to " + this.myShowForm + " the Signup Form ");
+  displayMessage(message: string) {
+    console.log("Message: " + message);
+    this.message = message;
+    this.messageExists = true;
 
   }
 

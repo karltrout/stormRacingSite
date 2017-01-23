@@ -42,3 +42,16 @@ p {
   color: #666666;
   height: 26px;
 }
+
+.alert {
+  background-color: rgba(255,0,0,1);
+  border: 1px solid #FFFFDC;
+  border-radius: 4px;
+  color: #FFFFFF;
+  height: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+  padding: 5px;
+  font-weight: bold;
+}
