@@ -10,11 +10,32 @@ export class UserAccountService {
 
   private usersRootUrl = environment.REST_API;//"http://localhost:8080/users/";
 
-  constructor(private http: Http) { }
+  statusUp = false;
+
+  constructor(private http: Http) {
+
+    this.http.get(this.usersRootUrl + "/status")
+      .toPromise()
+      .then(this.serviceStatus)
+      .catch(
+        error => {
+          console.log("REJECT Reason: -> " + error.status);
+          this.statusUp = false;
+        }
+      );
+
+  }
+
+  private serviceStatus(response: Response) {
+
+    this.statusUp = (response instanceof Response);
+    console.log("Returned Service Status is Currently :" + this.statusUp );
+
+  }
 
   getUserByEmail(email: string): Promise<User> {
 
-    console.log("Envirnment is Prod :"+environment.production);
+    console.log("Envirnment is Prod :" + environment.production);
 
     return this.http.get(this.usersRootUrl + "exists?email=" + email)
       .toPromise()
@@ -25,12 +46,12 @@ export class UserAccountService {
 
   createUserAccount(newUser: User): Promise<User> {
 
-    console.log("Attempting to create a new User -> "+newUser.getEmail());
+    console.log("Attempting to create a new User -> " + newUser.getEmail());
 
     let headers = new Headers({ 'Content-Type': 'application/json' });
     let options = new RequestOptions({ headers: headers });
 
-    return this.http.post(this.usersRootUrl,JSON.stringify(newUser), options)
+    return this.http.post(this.usersRootUrl, JSON.stringify(newUser), options)
       .toPromise()
       .then(this.mapUserData)
       .catch(this.errorHandling);
@@ -55,9 +76,11 @@ export class UserAccountService {
     } else {
       errMsg = error.message ? error.message : error.toString();
     }
-    console.log("An error occured in user uccounts service: "+errMsg);
+    console.log("Service Status is Currently :"+status);
+    console.log("An error occured in user uccounts service: " + errMsg);
     console.error(errMsg);
     return Promise.reject(error);
+
   }
 
 }

@@ -1,4 +1,4 @@
-<div class="signup-container">
+<div [hidden]="!backendServiceStatusUp" class="signup-container">
   <p (click)="showForm()">Get the Weather Report</p>
   <form [@revealSignup]="myShowForm">
     <input [(ngModel)]="user.firstName" type="text" name="firstName" class="signup-entry signup-entry-plus" id="firstName" placeholder="First Name" />

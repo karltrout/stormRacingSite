@@ -52,6 +52,7 @@ const INVALID_EMAIL_MSG: string = "Email Address invalid";
 
 export class SignupComponent implements OnInit {
   submitted = false;
+  backendServiceStatusUp = true;
   myShowForm: string = 'hide';
   messageExists: boolean = false;
   message: string = "error message";
@@ -66,6 +67,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit() {
     this.user = new User();
+    this.backendServiceStatusUp = this.userAccountService.statusUp;
   }
 
   onSubmit() {
